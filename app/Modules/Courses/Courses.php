@@ -64,7 +64,7 @@ class Courses
     {
         return $this->name;
     }
-    public function getEmail() : int
+    public function getCapacity() : int
     {
         return $this->capacity;
     }
