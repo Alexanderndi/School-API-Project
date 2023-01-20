@@ -73,15 +73,15 @@ class StudentsRepository
             DB::select(
                 "SELECT $selectColumns
                     FROM {$this->tableName}
-                    JOIN students_courses_enrollments ON students_courses_enrollments.courses_id : courseId
-                    WHERE student.id = students_courses_enrollments.student_id
+                    JOIN students_courses_enrollments ON students_courses_enrollments.courses_id = :courseId
+                    WHERE students.id = students_courses_enrollments.students_id
                     AND students_courses_enrollments.deleted_at IS NULL
                 ", [
                     "courseId" => $courseId
                 ])
         ), true);
         if (count($result) === 0) {
-            throw new \InvalidArgumentException("No Student enrolled with the provided ID");
+            return [];
         }
 
 

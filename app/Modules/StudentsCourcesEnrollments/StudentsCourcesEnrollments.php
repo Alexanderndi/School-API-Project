@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Courses;
+namespace App\Modules\StudentsCourcesEnrollments;
 
-class Courses
+class StudentsCourcesEnrollments
 {
     private ?int $id;
-    private string $name;
-    private int $totalStudentsEnrolled;
-    private int $capacity;
+    private int $studentsId;
+    private int $coursesId;
+    private int $enrolledByUsersId;
     private ?string $deletedAt;
     private string $createdAt;
     private ?string $updatedAt;
 
     public function __construct(
         ?int $id,
-        string $name,
-        int $totalStudentsEnrolled,
-        int $capacity,
+        int $studentsId,
+        int $coursesId,
+        int $enrolledByUsersId,
         ?string $deletedAt,
         string $createdAt,
         ?string $updatedAt
     )
     {
         $this->id = $id;
-        $this->name = $name;
-        $this->totalStudentsEnrolled = $totalStudentsEnrolled;
-        $this->capacity = $capacity;
+        $this->studentsId = $studentsId;
+        $this->coursesId = $coursesId;
+        $this->enrolledByUsersId = $enrolledByUsersId;
         $this->deletedAt = $deletedAt;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
@@ -37,9 +37,9 @@ class Courses
     {
         return [
             "id" => $this->id,
-            "name" => $this->name,
-            "totalStudentsEnrolled" => $this->totalStudentsEnrolled,
-            "capacity" => $this->capacity,
+            "studentsId" => $this->studentsId,
+            "coursesId" => $this->coursesId,
+            "enrolledByUsersId" => $this->enrolledByUsersId,
             "deletedAt" => $this->deletedAt,
             "createdAt" => $this->createdAt,
             "updatedAt" => $this->updatedAt,
@@ -49,8 +49,9 @@ class Courses
     {
         return [
             "id" => $this->id,
-            "name" => $this->name,
-            "capacity" => $this->capacity,
+            "students_id" => $this->studentsId,
+            "courses_id" => $this->coursesId,
+            "enrolled_by_users_id" => $this->enrolledByUsersId,
             "deleted_at" => $this->deletedAt,
             "created_at" => $this->createdAt,
             "updated_at" => $this->updatedAt,
@@ -60,13 +61,17 @@ class Courses
     {
         return $this->id;
     }
-    public function getName() : string
+    public function getStudentsId() : int
     {
-        return $this->name;
+        return $this->studentsId;
+    }
+    public function getName() : int
+    {
+        return $this->coursesId;
     }
     public function getEmail() : int
     {
-        return $this->capacity;
+        return $this->enrolledByUsersId;
     }
     public function getDeletedAt() : ?string
     {
@@ -79,10 +84,6 @@ class Courses
     public function getUpdatedAt() : ?string
     {
         return $this->updatedAt;
-    }
-    public function getTotalStudentsEnrolled() : int
-    {
-        return $this->totalStudentsEnrolled;
     }
 
 }

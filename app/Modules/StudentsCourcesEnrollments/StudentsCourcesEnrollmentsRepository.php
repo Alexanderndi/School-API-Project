@@ -2,30 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Courses;
+namespace App\Modules\StudentsCourcesEnrollments;
 
 use Exception;
-use App\Modules\Courses\Courses;
+use App\Modules\StudentsCourcesEnrollments\StudentsCourcesEnrollments;
 use Illuminate\Support\Facades\DB;
 
-class CoursesRepository
+class StudentsCourcesEnrollmentsRepository
 {
-    private $tableName = "courses";
+    private $tableName = "students_courses_enrollments";
     private $selectColumns = [
-        "courses.id",
-        "courses.name",
-        "courses.capacity",
-        "(SELECT COUNT(*)
-            FROM students_courses_enrollments
-            WHERE students_courses_enrollments.courses_id = courses.id
-            AND students_courses_enrollments.deleted_at IS NULL
-        )",
-        "courses.deleted_at AS deletedAt",
-        "courses.created_at AS createdAt",
-        "courses.updated_at AS updatedAt",
+        "students_courses_enrollments.id",
+        "students_courses_enrollments.students_id AS studentsId",
+        "students_courses_enrollments.courses_id AS coursesId",
+        "students_courses_enrollments.enrolled_by_users_id AS enrolledByUsersId",
+        "students_courses_enrollments.deleted_at AS deletedAt",
+        "students_courses_enrollments.created_at AS createdAt",
+        "students_courses_enrollments.updated_at AS updatedAt",
     ];
 
-    public function get(int $id) : Courses
+    public function get(int $id) : StudentsCourcesEnrollments
     {
         $selectColumns = implode(", ", $this->selectColumns);
         $result = json_decode(json_encode(
@@ -38,11 +34,11 @@ class CoursesRepository
                 ])
         ), true);
         if ($result === null) {
-            throw new \InvalidArgumentException("Invalid course ID");
+            throw new \InvalidArgumentException("Invalid students ID or course enrollments ID");
         }
-        return CoursesMapper::mapFrom($result);
+        return StudentsCourcesEnrollmentsMapper::mapFrom($result);
     }
-    public function update(Courses $courses): Courses
+    public function update(StudentsCourcesEnrollments $courses): StudentsCourcesEnrollments
     {
         return DB::transaction(function () use ($courses) {
             DB::table($this->tableName)->updateOrInsert([
